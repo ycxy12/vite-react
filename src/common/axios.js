@@ -4,7 +4,7 @@ import axios from "axios"
 import { showFullScreenLoading, tryHideFullScreenLoading } from "@/common/serviceLoading"
 import { checkStatus } from "@/common/checkStatus"
 import { AxiosCanceler } from "@/common/axiosCancel"
-import { setToken } from "@/store/modules/global/action"
+import { setToken } from "@/store/modules/action"
 import { message } from "antd"
 import { store } from "@/store"
 

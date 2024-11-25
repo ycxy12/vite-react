@@ -2,19 +2,19 @@
  * @Author: yc
  * @Date: 2024-11-24 18:35:30
  * @LastEditors: yc
- * @LastEditTime: 2024-11-25 07:45:42
+ * @LastEditTime: 2024-11-25 14:40:19
  * @Description: 描述
  */
 import { Avatar, Modal, Dropdown, message } from "antd"
 import { ExclamationCircleOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
-import { HOME_URL } from "@/common/config"
-import { connect } from "react-redux"
-import { setToken } from "@/store/modules/global/action"
+import { useDispatch } from "react-redux" // 使用 useDispatch
+import { setToken } from "@/store/modules/action"
 import avatar from "@/assets/images/avatar.png"
+import { HOME_URL } from "@/common/config"
 
-const AvatarIcon = (props) => {
-	const { setToken } = props
+const AvatarIcon = () => {
+	const dispatch = useDispatch() // 使用 useDispatch 获取 dispatch
 	const navigate = useNavigate()
 
 	// 退出登录
@@ -26,7 +26,7 @@ const AvatarIcon = (props) => {
 			okText: "确认",
 			cancelText: "取消",
 			onOk: () => {
-				setToken("")
+				dispatch(setToken("")) // 使用 dispatch 来触发 setToken
 				message.success("退出登录成功！")
 				navigate("/login")
 			},
@@ -59,13 +59,10 @@ const AvatarIcon = (props) => {
 	]
 
 	return (
-		<>
-			<Dropdown menu={{ items }} placement="bottom" arrow trigger={["click"]}>
-				<Avatar size="large" src={avatar} />
-			</Dropdown>
-		</>
+		<Dropdown menu={{ items }} placement="bottom" arrow trigger={["click"]}>
+			<Avatar size="large" src={avatar} />
+		</Dropdown>
 	)
 }
 
-const mapDispatchToProps = { setToken }
-export default connect(null, mapDispatchToProps)(AvatarIcon)
+export default AvatarIcon

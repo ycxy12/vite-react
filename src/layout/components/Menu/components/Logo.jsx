@@ -1,8 +1,9 @@
+import { useSelector } from "react-redux" // 使用 useSelector 来获取 Redux store 状态
 import logo from "@/assets/images/logo.png"
-import { connect } from "react-redux"
 
-const Logo = (props) => {
-	const { isCollapse } = props
+const Logo = () => {
+	const isCollapse = useSelector((state) => state.isCollapse) // 获取 isCollapse 状态
+
 	return (
 		<div className="logo-box">
 			<img src={logo} alt="logo" className="logo-img" />
@@ -11,5 +12,4 @@ const Logo = (props) => {
 	)
 }
 
-const mapStateToProps = (state) => state.menu
-export default connect(mapStateToProps)(Logo)
+export default Logo

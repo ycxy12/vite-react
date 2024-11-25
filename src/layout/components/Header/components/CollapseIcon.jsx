@@ -1,23 +1,21 @@
+import { useDispatch, useSelector } from "react-redux" // 使用 useSelector 和 useDispatch
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons"
-import { connect } from "react-redux"
-import { updateCollapse } from "@/store/modules/menu/action"
+import { updateCollapse } from "@/store/modules/action"
 
-const CollapseIcon = (props) => {
-    console.log(props)
-    const { isCollapse, updateCollapse } = props
-    console.log(isCollapse)
-    return (
-        <div
-            className="collapsed"
-            onClick={() => {
-                updateCollapse(!isCollapse)
-            }}
-        >
-            {isCollapse ? <MenuUnfoldOutlined id="isCollapse" /> : <MenuFoldOutlined id="isCollapse" />}
-        </div>
-    )
+const CollapseIcon = () => {
+	const dispatch = useDispatch() // 使用 useDispatch 来获取 dispatch
+	const isCollapse = useSelector((state) => state.isCollapse) // 使用 useSelector 获取 isCollapse 状态
+
+	return (
+		<div
+			className="collapsed"
+			onClick={() => {
+				dispatch(updateCollapse(!isCollapse)) // 调度更新 isCollapse
+			}}
+		>
+			{isCollapse ? <MenuUnfoldOutlined id="isCollapse" /> : <MenuFoldOutlined id="isCollapse" />}
+		</div>
+	)
 }
 
-const mapStateToProps = (state) => state.menu
-const mapDispatchToProps = { updateCollapse }
-export default connect(mapStateToProps, mapDispatchToProps)(CollapseIcon)
+export default CollapseIcon

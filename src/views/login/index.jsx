@@ -2,21 +2,21 @@
  * @Author: yc
  * @Date: 2024-11-24 17:08:29
  * @LastEditors: yc
- * @LastEditTime: 2024-11-24 20:43:27
+ * @LastEditTime: 2024-11-25 14:51:16
  * @Description: 登录页面
  */
 import { Button, Checkbox, Form, Input, message } from "antd"
-import { setToken } from "@/store/modules/global/action"
+import { setToken } from "@/store/modules/action"
 import { useNavigate } from "react-router-dom"
 import { HOME_URL } from "@/common/config"
 import styles from "./index.module.less"
-import { connect } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useState } from "react"
 import { loginApi } from "@/api/login"
 
-const LoginForm = (props) => {
+const LoginForm = () => {
+	const dispatch = useDispatch() // 使用 useDispatch 获取 dispatch
 	const navigate = useNavigate()
-	const { setToken } = props
 	const [loading, setLoading] = useState(false)
 
 	const onFinish = async (loginForm) => {
@@ -24,7 +24,7 @@ const LoginForm = (props) => {
 		if (username === "admin" && password === "123456") {
 			setLoading(true)
 			const { data } = await loginApi(loginForm)
-			setToken(data?.access_token)
+			dispatch(setToken(data?.access_token))
 			setLoading(false)
 			message.success("登录成功！")
 			//添加动态路由
@@ -60,5 +60,4 @@ const LoginForm = (props) => {
 	)
 }
 
-const mapDispatchToProps = { setToken }
-export default connect(null, mapDispatchToProps)(LoginForm)
+export default LoginForm
