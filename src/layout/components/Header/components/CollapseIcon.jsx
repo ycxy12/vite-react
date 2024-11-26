@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux" // 使用 useSelector 和 useDispatch
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons"
-import { updateCollapse } from "@/store/modules/action"
+import { updateCollapse } from "@/redux/modules/menu"
 
 const CollapseIcon = () => {
 	const dispatch = useDispatch() // 使用 useDispatch 来获取 dispatch
-	const isCollapse = useSelector((state) => state.isCollapse) // 使用 useSelector 获取 isCollapse 状态
+	const { isCollapse } = useSelector((state) => state.menu) // 使用 useSelector 获取 isCollapse 状态
 
 	return (
 		<div

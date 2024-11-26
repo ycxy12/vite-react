@@ -1,5 +1,77 @@
 {
 	"code": 200,
-	"message": "成功",
-	"data": []
+	"massage": "成功",
+	"data": [
+		{
+			"path": "/data",
+			"meta": {
+				"key": "home",
+				"icon": "ApartmentOutlined",
+				"title": "情报数据采集",
+				"isHide": false
+			},
+			"children": [
+				{
+					"path": "/data/task",
+					"element": "/task/index",
+					"meta": {
+						"key": "task",
+						"icon": "BlockOutlined",
+						"title": "采集任务管理",
+						"isHide": false
+					}
+				},
+				{
+					"path": "/data/crawler",
+					"element": "/crawler/index",
+					"meta": {
+						"key": "crawler",
+						"icon": "CodeOutlined",
+						"title": "爬虫脚本管理",
+						"isHide": false
+					}
+				},
+				{
+					"path": "/data/channel",
+					"element": "/channel/index",
+					"meta": {
+						"key": "channel",
+						"icon": "DeploymentUnitOutlined",
+						"title": "采集渠道管理",
+						"isHide": false
+					}
+				},
+				{
+					"path": "/data/download",
+					"element": "/download/index",
+					"meta": {
+						"key": "download",
+						"icon": "DownloadOutlined",
+						"title": "下载器配置",
+						"isHide": false
+					}
+				}
+			]
+		},
+		{
+			"path": "/clean",
+			"element": "/clean/index",
+			"meta": {
+				"key": "clean",
+				"icon": "InteractionOutlined",
+				"title": "情报内容清洗",
+				"isHide": false
+			}
+		},
+		{
+			"path": "/analysis",
+			"element": "/analysis/index",
+			"meta": {
+				"key": "analysis",
+				"icon": "ControlOutlined",
+				"title": "情报内容分析",
+				"isHide": false
+			}
+		}
+	]
 }

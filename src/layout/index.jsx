@@ -2,14 +2,14 @@
  * @Author: yc
  * @Date: 2024-11-24 18:35:30
  * @LastEditors: yc
- * @LastEditTime: 2024-11-25 14:38:29
+ * @LastEditTime: 2024-11-25 20:27:40
  * @Description: Layout
  */
 import { useEffect } from "react"
 import { Outlet } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux" // 使用 Redux Toolkit 的钩子
 import { Layout } from "antd"
-import { updateCollapse } from "@/store/modules/action"
+import { updateCollapse } from "@/redux/modules/menu"
 import LayoutMenu from "./components/Menu"
 import LayoutHeader from "./components/Header"
 import "./index.less"
@@ -17,7 +17,7 @@ import "./index.less"
 const LayoutIndex = () => {
 	const { Sider, Content } = Layout
 	const dispatch = useDispatch() // 使用 dispatch
-	const isCollapse = useSelector((state) => state.isCollapse) // 获取 Redux store 中的 isCollapse
+	const { isCollapse } = useSelector((state) => state.menu) // 获取 Redux store 中的 isCollapse
 
 	// 监听窗口大小变化
 	const listeningWindow = () => {

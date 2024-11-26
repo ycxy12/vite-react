@@ -2,14 +2,14 @@
  * @Author: yc
  * @Date: 2024-11-24 18:35:30
  * @LastEditors: yc
- * @LastEditTime: 2024-11-25 14:40:19
- * @Description: 描述
+ * @LastEditTime: 2024-11-25 20:28:47
+ * @Description: 头像
  */
 import { Avatar, Modal, Dropdown, message } from "antd"
 import { ExclamationCircleOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux" // 使用 useDispatch
-import { setToken } from "@/store/modules/action"
+import { setToken } from "@/redux/modules/user"
 import avatar from "@/assets/images/avatar.png"
 import { HOME_URL } from "@/common/config"
 

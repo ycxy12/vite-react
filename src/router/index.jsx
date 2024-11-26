@@ -2,63 +2,43 @@
  * @Author: yc
  * @Date: 2024-11-24 18:40:37
  * @LastEditors: yc
- * @LastEditTime: 2024-11-25 07:44:56
- * @Description: 描述
+ * @LastEditTime: 2024-11-26 18:36:09
+ * @Description: 路由
  */
-import { Navigate, useRoutes } from "react-router-dom"
-import Login from "@/views/login/index"
-import { LayoutIndex } from "@/router/constant"
-import Home from "@/views/home/index"
+import { lazy } from "react"
+import { useSelector } from "react-redux"
+import { useRoutes } from "react-router-dom"
+import lazyLoad from "./modules/lazyLoad"
+import { staticRouter, errorRouter } from "./modules/staticRouter"
+import { useMemo } from "react"
 
 // * 导入所有router
-const metaRouters = import.meta.glob("./modules/*.tsx", { eager: true })
-console.log(metaRouters)
-// * 处理路由
-export const routerArray = []
-Object.keys(metaRouters).forEach((item) => {
-	Object.keys(metaRouters[item]).forEach((key) => {
-		routerArray.push(...metaRouters[item][key])
-	})
-})
-
-export const rootRouter = [
-	{
-		path: "/",
-		element: <Navigate to="/login" />,
-	},
-	{
-		path: "/login",
-		element: <Login />,
-		meta: {
-			requiresAuth: false,
-			title: "登录页",
-			key: "login",
-		},
-	},
-	// ...routerArray,
-	{
-		element: <LayoutIndex />,
-		children: [
-			{
-				path: "/home",
-				// element: lazyLoad(React.lazy(() => import("@/views/home/index"))),
-				element: <Home />,
-				meta: {
-					requiresAuth: true,
-					title: "首页",
-					key: "home",
-				},
-			},
-		],
-	},
-	{
-		path: "*",
-		element: <Navigate to="/404" />,
-	},
-]
+const modules = import.meta.glob("@/views/**/*.jsx")
 
 const Router = () => {
-	const routes = useRoutes(rootRouter)
+	const flatMenuList = useSelector((state) => state.menu.flatMenuList)
+
+	//生成扁平化菜单  使用 useMemo 缓存动态路由，只有 flatMenuList 变化时才重新生成
+	const dynamicRouter = useMemo(() => {
+		return flatMenuList.reduce((previous, current) => {
+			// 过滤掉有子项的菜单项
+			if (current.element)
+				previous.push({
+					path: current.path,
+					element: lazyLoad(lazy(modules[`/src/views${current.element}.jsx`])),
+					meta: current.meta,
+				})
+			return previous
+		}, [])
+	}, [flatMenuList]) // 依赖于 flatMenuList，当其变化时重新计算
+
+	//将动态路由插入到Layout中
+	let index = staticRouter.findIndex((item) => item.meta?.key === "layout")
+	staticRouter[index].children = dynamicRouter
+
+	//合并路由
+	const rootRoutes = [...staticRouter, ...errorRouter]
+	const routes = useRoutes(rootRoutes)
 	return routes
 }
 

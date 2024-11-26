@@ -4,9 +4,9 @@ import axios from "axios"
 import { showFullScreenLoading, tryHideFullScreenLoading } from "@/common/serviceLoading"
 import { checkStatus } from "@/common/checkStatus"
 import { AxiosCanceler } from "@/common/axiosCancel"
-import { setToken } from "@/store/modules/action"
+import { setToken } from "@/redux/modules/user"
 import { message } from "antd"
-import { store } from "@/store"
+import { store } from "@/redux"
 
 // 实例化请求取消器
 const axiosCanceler = new AxiosCanceler()
@@ -37,7 +37,9 @@ class RequestHttp {
 				axiosCanceler.addPending(config)
 				// 如果当前请求不需要显示 loading, 在 api 服务中通过指定的第三个参数 { headers: { noLoading: true } } 来控制不显示 loading
 				if (!config.headers.noLoading) showFullScreenLoading()
-				const token = store.getState().global.token
+				console.log(store.getState())
+
+				const token = store.getState().user.token
 				return { ...config, headers: { ...config?.headers, "x-access-token": token } }
 			},
 			(error) => {
